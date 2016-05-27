@@ -13,12 +13,12 @@
  * $Id: sms.php 17217 2016-01-19 06:29:08Z Shadow & 鸿宇
  */
 
+header("content-Type: text/html; charset=Utf-8"); //设置字符的编码是utp-8
+error_reporting(0);
+
 define('IN_ECS', true);
 require(dirname(__FILE__) . '/includes/init.php');
 include("../sms/hy_config.php");
-
-header("content-Type: text/html; charset=Utf-8"); //设置字符的编码是utp-8
-error_reporting(0);
 
 ?>
 <html>
