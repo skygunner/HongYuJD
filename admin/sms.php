@@ -17,12 +17,9 @@ header("content-Type: text/html; charset=Utf-8"); //设置字符的编码是utp-
 error_reporting(0);
 
 define('IN_ECS', true);
-
 require(dirname(__FILE__) . '/includes/init.php');
-require_once(ROOT_PATH . 'includes/cls_sms.php');
-
-
 include("../sms/hy_config.php");
+
 ?>
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
