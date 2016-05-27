@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 鸿宇多用户商城 阿里大鱼短信管理后台
+ * 鸿宇多用户商城 短信模块 之 控制器
  * ============================================================================
  * 版权所有 2015-2016 鸿宇多用户商城科技有限公司，并保留所有权利。
  * 网站地址: http://bbs.hongyuvip.com；
@@ -13,62 +13,62 @@
  * $Id: sms.php 17217 2016-01-19 06:29:08Z Shadow & 鸿宇
  */
 
-header("content-Type: text/html; charset=Utf-8"); //设置字符的编码是utp-8
-error_reporting(0);
-
 define('IN_ECS', true);
 require(dirname(__FILE__) . '/includes/init.php');
 include("../sms/hy_config.php");
 
+header("content-Type: text/html; charset=Utf-8"); //设置字符的编码是utp-8
+error_reporting(0);
+
 ?>
-<html>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>阿里大鱼短信管理</title>
-<style type="text/css" >
-    :focus{outline:none;}
-    .myem {font-size: 15px;color: black;font-weight: bold;}
-    .main {padding-left: 60px;}
-    .button {width: 150px;height: 35px;border-radius: 5px;border: none;background-color: #0E94D1;color: #FFF;margin-left: 66px;}
-    .button:hover {cursor: pointer;}
-    a{color: red;text-decoration: none;margin-left: 8px;}
-    a:hover {color: red;text-decoration: underline;}
-    .div1 {color: black;font-size: 14px;}
-    input {padding: 3px 5px;font:12px "sans-serif", "Arial", "Verdana";line-height: 12px;}
-    body{font:12px "sans-serif", "Arial", "Verdana";}
-    span {line-height: 25px;color: gray;font-size: 13px;}
-    h3{font-size: 18px;border-bottom: 1px solid #DCDCDC;padding: 10px 0;}
-    p{font:12px "sans-serif", "Arial", "Verdana";}
-</style>
-<body>
-<h3 align="center">阿里大鱼短信管理</h3>
-<div class="main">
-    <form method="post" action="">
-        <div class="div1">
-            <span class="myem">请填写阿里大鱼短信参数<a href="http://www.alidayu.com" target="_blank">点此申请账号</a></span>
-<!--            <p>　短信模板：<input type="text" id="sign" name="hy_template" value='--><?php //echo $hy_template ?><!--'/><i style="font-style: normal;margin-left: 15px;color: #808080;">模板样式：尊敬的顾客，${content}祝您购物愉快！</i></p>-->
-            <p>　App Key&nbsp;：<input type="text" id="appkey" name="hy_appkey" value='<?php echo $hy_appkey ?>'/>
-            <p>App Secret：<input type="text" id="secretkey" name="hy_secretkey" style="width: 228px;" value='<?php echo $hy_secretkey ?>'/><p>
-<!--            <p>　短信签名：<input type="text" id="sign" name="hy_sign" value='--><?php //echo $hy_sign ?><!--'/><i style="font-style: normal;margin-left: 15px;color: #808080;">注意：此处填写内容必须是阿里大鱼审核通过的签名，否则短信无法发送。</i></p>-->
-            <p style="color: #808080;">　特别提醒：① 阿里大鱼短信环境必须是：PHP5.3　MySQL5.1</p>
-            <p style="color: #808080;">　　　　　　② 点击<a href="shop_config.php?act=list_edit" style="margin: 0 5px;">填写短信模板</a>或 前往：系统设置 -> 商店设置 -> 短信设置 进行操作。</p>
-            <p style="color: #808080;">　　　　　　③ 如需技术支持请联系：鸿宇科技 & Shadow QQ:1527200768</p>
-        </div>
+    <html>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>阿里大鱼短信管理</title>
+    <style type="text/css" >
+        :focus{outline:none;}
+        .myem {font-size: 15px;color: black;font-weight: bold;}
+        .main {padding-left: 60px;}
+        .button {width: 150px;height: 35px;border-radius: 5px;border: none;background-color: #0E94D1;color: #FFF;margin-left: 66px;}
+        .button:hover {cursor: pointer;}
+        a{color: red;text-decoration: none;margin-left: 8px;}
+        a:hover {color: red;text-decoration: underline;}
+        .div1 {color: black;font-size: 14px;}
+        input {padding: 3px 5px;font:12px "sans-serif", "Arial", "Verdana";line-height: 12px;}
+        body{font:12px "sans-serif", "Arial", "Verdana";}
+        span {line-height: 25px;color: gray;font-size: 13px;}
+        h3{font-size: 18px;border-bottom: 1px solid #DCDCDC;padding: 10px 0;}
+        p{font:12px "sans-serif", "Arial", "Verdana";}
+    </style>
+    <body>
+    <h3 align="center">阿里大鱼短信管理</h3>
+    <div class="main">
+        <form method="post" action="">
+            <div class="div1">
+                <span class="myem">请填写阿里大鱼短信参数<a href="http://www.alidayu.com" target="_blank">点此申请账号</a></span>
+                <!--            <p>　短信模板：<input type="text" id="sign" name="hy_template" value='--><?php //echo $hy_template ?><!--'/><i style="font-style: normal;margin-left: 15px;color: #808080;">模板样式：尊敬的顾客，${content}祝您购物愉快！</i></p>-->
+                <p>　App Key&nbsp;：<input type="text" id="appkey" name="hy_appkey" value='<?php echo $hy_appkey ?>'/>
+                <p>App Secret：<input type="text" id="secretkey" name="hy_secretkey" style="width: 228px;" value='<?php echo $hy_secretkey ?>'/><p>
+                    <!--            <p>　短信签名：<input type="text" id="sign" name="hy_sign" value='--><?php //echo $hy_sign ?><!--'/><i style="font-style: normal;margin-left: 15px;color: #808080;">注意：此处填写内容必须是阿里大鱼审核通过的签名，否则短信无法发送。</i></p>-->
+                <p style="color: #808080;">　特别提醒：① 阿里大鱼短信环境必须是：PHP5.3　MySQL5.1</p>
+                <p style="color: #808080;">　　　　　　② 点击<a href="shop_config.php?act=list_edit" style="margin: 0 5px;">填写短信模板</a>或 前往：系统设置 -> 商店设置 -> 短信设置 进行操作。</p>
+                <p style="color: #808080;">　　　　　　③ 如需技术支持请联系：鸿宇科技 & Shadow QQ:1527200768</p>
+            </div>
 
-        <!-- 短信模板 -->
-        <div class="div2">
-            <span class="myem" >虚拟卡发货是否发送短信给客户</span><br/>
-            是<input type="radio" name="mobile_virtual" value="1" <?php if($mobile_virtual==1){echo 'checked';} ?>/>
-            否<input type="radio" name="mobile_virtual" value="0" <?php if($mobile_virtual==0){echo 'checked';} ?>/><br/>
-            模板编号：<input name="mobile_virtual_template" type="text" value='<?php echo $mobile_virtual_template ?>'/><br/>
-            <span>模板内容：您已获得店铺${supplier_name}的${goods_name}虚拟卡，卡号为：${card_sn}，有效期为：${vali_date}</span><p>
-        </div>
+            <!-- 短信模板 -->
+            <div class="div2">
+                <span class="myem" >虚拟卡发货是否发送短信给客户</span><br/>
+                是<input type="radio" name="mobile_virtual" value="1" <?php if($mobile_virtual==1){echo 'checked';} ?>/>
+                否<input type="radio" name="mobile_virtual" value="0" <?php if($mobile_virtual==0){echo 'checked';} ?>/><br/>
+                模板编号：<input name="mobile_virtual_template" type="text" value='<?php echo $mobile_virtual_template ?>'/><br/>
+                <span>模板内容：您已获得店铺${supplier_name}的${goods_name}虚拟卡，卡号为：${card_sn}，有效期为：${vali_date}</span><p>
+            </div>
 
-        <input class="button" type="submit" name="submit" id="submit" value="提交修改"/><br/><br/><br/>
-    </form>
-</div>
-<div style="width: 100%;line-height: 35px;font-size: 12px;color: #585858;text-align: center;position:fixed;bottom:0;border-top: 1px solid #DCDCDC;"><a href="http://hongyuvip.com" target="_blank" style="text-decoration: none;color: #585858;">Copyright © 2015 - 2016 鸿宇科技 版权所有 盗版必究 </a></div>
-</body>
-</html>
+            <input class="button" type="submit" name="submit" id="submit" value="提交修改"/><br/><br/><br/>
+        </form>
+    </div>
+    <div style="width: 100%;line-height: 35px;font-size: 12px;color: #585858;text-align: center;position:fixed;bottom:0;border-top: 1px solid #DCDCDC;"><a href="http://hongyuvip.com" target="_blank" style="text-decoration: none;color: #585858;">Copyright © 2015 - 2016 鸿宇科技 版权所有 盗版必究 </a></div>
+    </body>
+    </html>
 
 <?php
 error_reporting(0);
