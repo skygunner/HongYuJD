@@ -227,6 +227,11 @@ function sendSMS($mobile_phone, $content)
     if ($hy_result == true) {
         return true;
     } else {
+       if($hy_showbug == true){
+           $hy_result = $resp->sub_msg;
+           echo "发送失败：【" . $hy_result . "】";
+           exit;
+       }
         return false;
     }
 }
