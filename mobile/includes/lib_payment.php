@@ -166,9 +166,12 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '')
 		{
 	                $order_id = $order['order_id'];
 	                $order_sn = $order['order_sn'];
-                    $suppid = $order['supplier_id'];
-                    $supplier[$suppid]	 = $order_sn;
+                    $mobile = $order['mobile'];
+			        $suppid = $order['supplier_id'];
+		        	$supplier[$suppid] = $order_sn;
 
+
+	
 	                /* 修改订单状态为已付款 */
 	                $sql = 'UPDATE ' . $GLOBALS['ecs']->table('order_info') .
 	                            " SET order_status = '" . OS_CONFIRMED . "', " .
@@ -186,8 +189,15 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '')
 	                /* 如果需要，发短信 */
 	               include_once(ROOT_PATH.'sms/sms.php');
 				   //付款给商家发短信
-                    $content = '客户已付款，订单号为：'. $order_sn .'请注意查看。【'.$GLOBALS['_CFG']['shop_name'].'】';
-                    send_sms($supplier,$content,2);
+				   send_sms($supplier,$GLOBALS['_CFG']['sms_order_payed_tpl'],2);
+				   //付款给客户发短信
+				   if($GLOBALS['_CFG']['sms_order_pay'] == 1)
+				   {
+					   $content = array($GLOBALS['_CFG']['sms_order_pay_tpl'],"{\"order_sn\":\"$order_sn\"}",$GLOBALS['_CFG']['sms_sign']);
+					   sendSMS($mobile,$content);
+				   }
+
+
 	                /* 对虚拟商品的支持 */
 	                $virtual_goods = get_virtual_goods($order_id);
 	                if (!empty($virtual_goods))
@@ -237,6 +247,17 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '')
                     $_LANG = array();
                     include_once(ROOT_PATH . 'languages/' . $GLOBALS['_CFG']['lang'] . '/user.php');
                     log_account_change($arr['user_id'], $arr['amount'], 0, 0, 0, $_LANG['surplus_type_0'], ACT_SAVING);
+					  /* 如果需要，发短信 */
+	               include_once(ROOT_PATH.'sms/sms.php');
+				   //付款给商家发短信
+				   send_sms($supplier,$GLOBALS['_CFG']['sms_order_payed_tpl'],2);
+
+				   //付款给客户发短信
+				   if($GLOBALS['_CFG']['sms_order_pay'] == 1)
+				   {
+                       $content = array($GLOBALS['_CFG']['sms_order_pay_tpl'],"{\"order_sn\":\"$order_sn\"}",$GLOBALS['_CFG']['sms_sign']);
+					   sendSMS($mobile,$content);
+				   }
                 }
             }
         }

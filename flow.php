@@ -2600,7 +2600,11 @@ elseif ($_REQUEST['step'] == 'done')
 				{
 					$sql = "SELECT user_money,mobile_phone FROM " . $GLOBALS['ecs']->table('users') . " WHERE user_id = '" . $order['user_id'] . "'";
 					$users = $GLOBALS['db']->getRow($sql);
-					$content = sprintf($_CFG['sms_use_balance_reduce_tpl'],date("Y-m-d H:i:s"),$order['order_amount'],$users['user_money'],$_CFG['sms_sign']);
+                    //shadow
+                    $time = date('Y-m-d H:i:s');
+                    $order_amount = $order['order_amount'];
+                    $user_money = $users['user_money'];
+					$content = array($_CFG['sms_use_balance_reduce_tpl'],"{\"time\":\"$time\",\"order_amount\":\"$order_amount\",\"user_money\":\"$user_money\"}",$_CFG['sms_sign']);
 					if($users['mobile_phone'])
 					{
 						require_once (ROOT_PATH . 'sms/sms.php');
@@ -2777,7 +2781,11 @@ elseif ($_REQUEST['step'] == 'done')
 			{
 				$sql = "SELECT user_money,mobile_phone FROM " . $GLOBALS['ecs']->table('users') . " WHERE user_id = '" . $order['user_id'] . "'";
 				$users = $GLOBALS['db']->getRow($sql);
-				$content = sprintf($_CFG['sms_use_balance_reduce_tpl'],date("Y-m-d H:i:s"),$order['surplus'],$users['user_money'],$_CFG['sms_sign']);
+                //shadow
+                $time = date('Y-m-d H:i:s');
+                $order_amount = $order['order_amount'];
+                $user_money = $users['user_money'];
+                $content = array($_CFG['sms_use_balance_reduce_tpl'],"{\"time\":\"$time\",\"order_amount\":\"$order_amount\",\"user_money\":\"$user_money\"}",$_CFG['sms_sign']);
 				if($users['mobile_phone'])
 				{
 					require_once (ROOT_PATH . 'sms/sms.php');
@@ -2890,10 +2898,14 @@ elseif ($_REQUEST['step'] == 'done')
                         }
                         $card = $GLOBALS['db']->getAll("select card_sn from ".$GLOBALS['ecs']->table('virtual_goods_card')." where order_sn='".$order['order_sn']."'");
                         require_once (ROOT_PATH . 'sms/sms.php');
+                        require_once (ROOT_PATH . 'sms/hy_config.php');
                         foreach($card as $k=>$v){
                             $card_sn .= $v['card_sn'].", ";
                             }
-                            $content = sprintf($_LANG['mobile_virtual_template'], $supplier_name, $val['goods_name'], $card_sn,local_date('Y-m-d',$val['valid_date']));
+                            //shadow
+                            $goods_name = $val['goods_name'];
+                            $vali_date = local_date('Y-m-d',$val['valid_date']);
+                            $content = array($mobile_virtual_template,"{\"supplier_name\":\"$supplier_name\",\"goods_name\":\"$goods_name\",\"card_sn\":\"$card_sn\",\"vali_date\":\"$vali_date\"}" ,$_CFG['sms_sign']);
                             $result = sendSMS($_REQUEST['mobile_phone'],$content);
                         }
 	                /* 如果没有实体商品，修改发货状态，送积分和红包 */
@@ -2959,7 +2971,7 @@ elseif ($_REQUEST['step'] == 'done')
 	}
 	//$supplier_ids = array_keys();
 	require_once (ROOT_PATH . 'sms/sms.php');
-	send_sms($supplier_ids,$_CFG['sms_order_placed_tpl'],1);
+	send_sms($supplier_ids,$_CFG['sms_order_placed_tpl'],1);    //shadow
 
 	$order['order_amount'] = $all_order_amount; //替换为总金额去支付
 
@@ -3431,6 +3443,7 @@ else
 			}
 		}
 	}
+
 	foreach($cart_goods['goods_list'] as $k=>$v){
 		$discount = compute_discount($k);
 		if(is_array($discount)){

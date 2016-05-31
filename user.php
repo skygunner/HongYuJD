@@ -1880,7 +1880,8 @@ function action_act_edit_password ()
 			// 是否开启修改密码发短信
 			if($_CFG['sms_change_password'] == 1)
 			{
-				$content = sprintf($_CFG['sms_change_password_tpl'], date("Y-m-d H:i:s"), $_CFG['sms_sign']);
+                $time = date('Y-m-d H:i:s');
+                $content = array($_CFG['sms_change_password_tpl'],"{\"time\":\"$time\"}",$_CFG['sms_sign']);
 				$sql = "SELECT mobile_phone FROM " . $GLOBALS['ecs']->table('users') . " WHERE user_id = '$user_id'";
 				$mobile_phone = $GLOBALS['db']->getOne($sql);
 				if($mobile_phone)
@@ -5469,7 +5470,9 @@ function action_vc_login_act ()
 	{
 		$sql = "SELECT user_money,mobile_phone FROM " . $GLOBALS['ecs']->table('users') . " WHERE user_id = '$user_id'";
 		$users = $GLOBALS['db']->getRow($sql);
-		$content = sprintf($_CFG['sms_recharge_balance_add_tpl'], $vcrow['type_money'], $users['user_money'], $_CFG['sms_sign']);
+        $type_money = $vcrow['type_money'];
+        $user_money = $users['user_money'];
+        $content = array($_CFG['sms_recharge_balance_add_tpl'],"{\"type_money\":\"$type_money\",\"user_money\":\"$user_money\"}",$_CFG['sms_sign']);
 		if($users['mobile_phone'])
 		{
 			include_once ('sms/sms.php');

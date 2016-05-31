@@ -153,11 +153,12 @@ function action_send_mobile_code ()
 	$_SESSION[VT_MOBILE_VALIDATE] = array();
 	
 	require_once (ROOT_PATH . 'sms/sms.php');
-	
+
 	// 生成6位短信验证码
 	$mobile_code = rand_number(6);
+
 	// 短信内容
-	$content = sprintf($_LANG['mobile_code_template'], $GLOBALS['_CFG']['shop_name'], $mobile_code, $GLOBALS['_CFG']['shop_name']);
+    $content = array($GLOBALS['_CFG']['sms_register_tpl'], "{\"code\":\"$mobile_code\",\"product\":\"找回密码\"}",$GLOBALS['_CFG']['sms_sign']);
 	
 	/* 发送激活验证短信 */
     $result = sendSMS($mobile_phone, $content);

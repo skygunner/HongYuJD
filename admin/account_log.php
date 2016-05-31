@@ -177,7 +177,9 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
 			}
 			$sql = "SELECT user_money,mobile_phone FROM " . $GLOBALS['ecs']->table('users') . " WHERE user_id = '$user_id'";
 			$users = $GLOBALS['db']->getRow($sql);
-			$content = sprintf($_CFG['sms_admin_operation_tpl'],date("Y-m-d H:i:s",gmtime()),$user_money,$users['user_money'],$_CFG['sms_sign']);
+            $time = date('Y-m-d H:i:s');
+            $money = $users['user_money'];
+            $content = array($_CFG['sms_admin_operation_tpl'],"{\"time\":\"$time\",\"user_money\":\"$user_money\",\"money\":\"$money\"}",$_CFG['sms_sign']);
 			if($users['mobile_phone'])
 			{
 				include_once('../sms/sms.php');

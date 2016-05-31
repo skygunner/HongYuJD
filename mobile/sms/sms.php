@@ -208,9 +208,9 @@ if ($_GET['act'] == 'send') {
 
 function sendSMS($mobile_phone, $content)
 {
-
     include "hy_config.php";
-    include "TopSdk.php";
+    include "AliSDK/TopSdk.php";
+    date_default_timezone_set('Asia/Shanghai');
     $c = new TopClient;
     $c->appkey = $hy_appkey;
     $c->secretKey = $hy_secretkey;
@@ -227,8 +227,6 @@ function sendSMS($mobile_phone, $content)
     if ($hy_result == true) {
         return true;
     } else {
-//       $hy_result = $resp->sub_code;
-//       echo "发送失败：请检查参数设置->" . $hy_result;
         return false;
     }
 }

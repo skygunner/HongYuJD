@@ -1093,7 +1093,10 @@ elseif ($_REQUEST['act'] == 'delivery_ship')
         if ($GLOBALS['_CFG']['sms_order_shipped'] == '1' && $order['mobile'] != '')
         {
             include_once('../sms/sms.php');
-			$content = sprintf($_CFG['sms_order_shipped_tpl'],$order['order_sn'],$order['consignee'],$order['address'],$_CFG['sms_sign']);
+            $order_sn = $order['order_sn'];
+            $consignee = $order['consignee'];
+            $address = $order['address'];
+			$content = array($_CFG['sms_order_shipped_tpl'],"{\"order_sn\":\"$order_sn\",\"consignee\":\"$consignee\",\"address\":\"$address\"}",$_CFG['sms_sign']);
 			sendSMS($order['mobile'],$content);
         }
     }
@@ -3510,7 +3513,10 @@ elseif ($_REQUEST['act'] == 'operate')
         if ($GLOBALS['_CFG']['sms_order_shipped'] == '1' && $order['mobile'] != '')
         {
             include_once('../sms/sms.php');
-			$content = sprintf($_CFG['sms_order_shipped_tpl'],$order['order_sn'],$order['consignee'],$order['address'],$_CFG['sms_sign']);
+            $order_sn = $order['order_sn'];
+            $consignee = $order['consignee'];
+            $address = $order['address'];
+            $content = array($_CFG['sms_order_shipped_tpl'],"{\"order_sn\":\"$order_sn\",\"consignee\":\"$consignee\",\"address\":\"$address\"}",$_CFG['sms_sign']);
 			sendSMS($order['mobile'],$content);
         }
     }

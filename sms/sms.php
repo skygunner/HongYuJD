@@ -207,27 +207,30 @@ if ($_GET['act'] == 'send') {
 
 function sendSMS($mobile_phone, $content)
 {
-   
    include "hy_config.php";
-   include "TopSdk.php";
+   include "AliSDK/TopSdk.php";
+   date_default_timezone_set('Asia/Shanghai');
    $c = new TopClient;
    $c->appkey = $hy_appkey;
    $c->secretKey = $hy_secretkey;
    $req = new AlibabaAliqinFcSmsNumSendRequest;
    $req->setExtend("123456");
    $req->setSmsType("normal");
-   $req->setSmsFreeSignName($content[2]);
-   $req->setSmsParam($content[1]);
-   $req->setRecNum($mobile_phone);
-   $req->setSmsTemplateCode($content[0]);
+   $req->setSmsFreeSignName($content[2]);   //短信签名
+   $req->setSmsParam($content[1]);          //短信内容
+   $req->setRecNum($mobile_phone);          //接收短信手机号
+   $req->setSmsTemplateCode($content[0]);   //模板编号
    $resp = $c->execute($req);
    $hy_result = $resp->result->success;
 
    if ($hy_result == true) {
        return true;
    } else {
-//       $hy_result = $resp->sub_code;
-//       echo "发送失败：请检查参数设置->" . $hy_result;
+       if($hy_showbug == true){
+           $hy_result = $resp->sub_msg;
+           echo "发送失败：【" . $hy_result . "】";
+           exit;
+       }
        return false;
    }
 }
