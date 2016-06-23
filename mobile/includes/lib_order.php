@@ -681,7 +681,7 @@ function order_fee($order, $goods, $consignee)
      if (!empty($order['bonus_sn']))
     {
         $bonus          = bonus_info(0,$order['bonus_sn']);
-        $total['bonus'] += $bonus['type_money'];
+        $total['bonus'] = $bonus['type_money'];
         //$total['bonus_kill'] = $order['bonus_kill'];
         //$total['bonus_kill_formated'] = price_format($total['bonus_kill'], false);
     }
